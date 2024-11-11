@@ -1,0 +1,4 @@
+.vagrant*
+Vagrantfile
+docker-files/storage/
+docker-files/config/
