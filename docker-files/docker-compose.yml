@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  qbittorrent-nox:
+    image: qbittorrentofficial/qbittorrent-nox
+    container_name: qbittorrent-nox
+    ports:
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 8080:8080/tcp
+    volumes:
+      - ./config/qbit_config:/config
+      - ./storage/download/torrent:/download/torrent
+    environment:
+      - QBT_LEGAL_NOTICE=confirm
+      - QBT_WEBUI_PORT=8080
+
+  prowlarr:
+    build:
+      context: ./prowlarr
+      dockerfile: Dockerfile
+      args:
+        - VERSION=1.25.4.4818
+        - BRANCH=master
+    volumes:
+      - ./config/prowlarr_config:/.config/Prowlarr
+    ports:
+      - "9696:9696"
+
+  radarr:
+    build:
+      context: ./radarr
+      dockerfile: Dockerfile
+      args:
+        - VERSION=5.14.0.9383
+        - BRANCH=master
+    volumes:
+      - ./config/radarr_config:/.config/Radarr
+      - ./storage/download:/download
+      - ./storage/download/movies:/download/movies
+    ports:
+      - "7878:7878"
+
+  sonarr:
+    build:
+      context: ./sonarr
+      dockerfile: Dockerfile
+      args:
+        - VERSION=4.0.10.2544
+        - BRANCH=main
+    volumes:
+      - ./config/sonarr_config:/.config/Sonarr
+      - ./storage/download:/download
+      - ./storage/download/tv-shows:/download/tv-shows
+    ports:
+      - "8989:8989"
+
+  jellyfin:
+    build:
+      context: ./jellyfin
+      dockerfile: Dockerfile
+      args:
+        - JELLY_VERSION=10.10.1
+        - JELLY_BRANCH=stable
+        - JFFMPEG_VERSION=7.0.2-6
+    volumes:
+      - ./config/jellyfin_config/data:/opt/jellyfin/data
+      - ./config/jellyfin_config/config:/opt/jellyfin/config
+      - ./storage/download:/download
+    ports:
+      - "8096:8096"
+
+  jellyseerr:
+    build:
+      context: ./jellyseerr
+      dockerfile: Dockerfile
+    volumes:
+      - ./config/jellyseerr_config:/etc/jellyseerr/jellyseerr.conf
+      - ./config/jellyseerr_config:/opt/jellyseerr/jellyseerr/config
+    ports:
+      - "5055:5055"
