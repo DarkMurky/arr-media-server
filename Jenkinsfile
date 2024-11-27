@@ -1,9 +1,9 @@
 def images = [
-  [name: "prowlarr-jenkins-test", dir: "docker-files/prowlarr", buildArgs: "--build-arg VERSION=1.25.4.4818 --build-arg BRANCH=master"],
-  [name: "radarr-jenkins-test", dir: "docker-files/radarr", buildArgs: "--build-arg VERSION=5.14.0.9383 --build-arg BRANCH=master"],
-  [name: "sonarr-jenkins-test", dir: "docker-files/sonarr", buildArgs: "--build-arg VERSION=4.0.10.2544 --build-arg BRANCH=main"],
-  [name: "jellyseerr-jenkins-test", dir: "docker-files/jellyseerr", buildArgs: ""],
-  [name: "jellyfin-jenkins-test", dir: "docker-files/jellyfin", buildArgs: "--build-arg JELLY_VERSION=10.10.1 --build-arg JFFMPEG_VERSION=7.0.2-6 --build-arg JELLY_BRANCH=stable"]
+  [name: "prowlarr", dir: "docker-files/prowlarr", buildArgs: "--build-arg VERSION=1.25.4.4818 --build-arg BRANCH=master"],
+  [name: "radarr", dir: "docker-files/radarr", buildArgs: "--build-arg VERSION=5.14.0.9383 --build-arg BRANCH=master"],
+  [name: "sonarr", dir: "docker-files/sonarr", buildArgs: "--build-arg VERSION=4.0.10.2544 --build-arg BRANCH=main"],
+  [name: "jellyseerr", dir: "docker-files/jellyseerr", buildArgs: ""],
+  [name: "jellyfin", dir: "docker-files/jellyfin", buildArgs: "--build-arg JELLY_VERSION=10.10.1 --build-arg JFFMPEG_VERSION=7.0.2-6 --build-arg JELLY_BRANCH=stable"]
 ]
 def builtImages = [: ]
 
@@ -39,7 +39,7 @@ pipeline {
             def buildArgs = image.buildArgs
 
             dir(dirPath) {
-              builtImages[name] = docker.build("${registry}/${name}:${BUILD_NUMBER}", "${buildArgs} .")
+              builtImages[name] = docker.build("${registry}/${name}:${params.environment}", "${buildArgs} .")
             }
           }
         }
@@ -52,8 +52,7 @@ pipeline {
           docker.withRegistry("", registryCredential) {
             for (image in images) {
               def name = image.name
-              builtImages[name].push("${BUILD_NUMBER}")
-              builtImages[name].push("latest")
+              builtImages[name].push("${params.environment}")
             }
           }
         }
@@ -65,7 +64,7 @@ pipeline {
         script {
           for (image in images) {
             def name = image.name
-            sh "docker rmi ${registry}/${name}:${BUILD_NUMBER}"
+            sh "docker rmi ${registry}/${name}:${params.environment}"
           }
         }
       }
