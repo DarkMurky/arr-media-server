@@ -35,6 +35,3 @@ EXPOSE 8096
 
 # Start Jellyfin
 CMD ["./jellyfin", "-d", "/opt/jellyfin/data", "-C", "/opt/jellyfin/cache", "-c", "/opt/jellyfin/config", "-l", "/opt/jellyfin/log", "--ffmpeg", "/usr/share/jellyfin-ffmpeg/ffmpeg"]
-
-# TEMP CHANGE
-# TEMP CHANGE
