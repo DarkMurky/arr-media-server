@@ -28,3 +28,5 @@ EXPOSE 9696
 
 # Start Prowlarr
 CMD ["./Prowlarr", "-nobrowser", "--data=/.config/Prowlarr"] 
+
+# temp change
