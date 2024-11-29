@@ -29,4 +29,4 @@ EXPOSE 9696
 # Start Prowlarr
 CMD ["./Prowlarr", "-nobrowser", "--data=/.config/Prowlarr"] 
 
-# temp change # temp change # temp change # temp change # temp change # temp change # temp change
+# temp change # temp change # temp change # temp change # temp change # temp change # temp change # temp change
