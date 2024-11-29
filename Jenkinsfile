@@ -74,12 +74,12 @@ pipeline {
   post {
     success {
       script {
-        updateGitHubStatus("success", "Build succeeded")
+        updateGitHubStatus("success", "Build succeeded...")
       }
     }
     failure {
       script {
-        updateGitHubStatus("failure", "Build failed")
+        updateGitHubStatus("failure", "Build failed...")
       }
     }
   }
