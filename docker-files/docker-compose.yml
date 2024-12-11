@@ -10,7 +10,7 @@ services:
       - 8080:8080/tcp
     volumes:
       - ./config/qbit_config:/config
-      - ./storage/download/torrent:/download/torrent
+      - ./storage/download/downloads:/downloads
     environment:
       - QBT_LEGAL_NOTICE=confirm
       - QBT_WEBUI_PORT=8080
@@ -36,7 +36,7 @@ services:
         - BRANCH=master
     volumes:
       - ./config/radarr_config:/.config/Radarr
-      - ./storage/download:/download
+      - ./storage/download/downloads:/downloads
       - ./storage/download/movies:/download/movies
     ports:
       - "7878:7878"
@@ -50,7 +50,7 @@ services:
         - BRANCH=main
     volumes:
       - ./config/sonarr_config:/.config/Sonarr
-      - ./storage/download:/download
+      - ./storage/download/downloads:/downloads
       - ./storage/download/tv-shows:/download/tv-shows
     ports:
       - "8989:8989"
