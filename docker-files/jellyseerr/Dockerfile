@@ -1,3 +1,4 @@
+FROM node:22-alpine AS node
 FROM alpine:3.20.3
 
 LABEL maintainer="karolisvaitiekunas@protonmail.com"
@@ -6,8 +7,12 @@ LABEL description="jellyseerr docker image"
 ENV JELLY_HOME=/opt/jellyseerr
 ENV JELLY_CONFIG=/etc/jellyseerr/jellyseerr.conf
 
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
+
 RUN apk add --no-cache  \
-		nodejs \
 		git \
 		curl && \
 		curl -L https://unpkg.com/@pnpm/self-installer | node
