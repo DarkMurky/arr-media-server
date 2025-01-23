@@ -16,24 +16,14 @@ services:
       - QBT_WEBUI_PORT=8080
 
   prowlarr:
-    build:
-      context: ./prowlarr
-      dockerfile: Dockerfile
-      args:
-        - VERSION=1.25.4.4818
-        - BRANCH=master
+    dockerfile: kvait/prowlarr:latest
     volumes:
       - ./config/prowlarr_config:/.config/Prowlarr
     ports:
       - "9696:9696"
 
   radarr:
-    build:
-      context: ./radarr
-      dockerfile: Dockerfile
-      args:
-        - VERSION=5.14.0.9383
-        - BRANCH=master
+    dockerfile: kvait/radarr:latest
     volumes:
       - ./config/radarr_config:/.config/Radarr
       - ./storage/download/downloads:/downloads
@@ -42,12 +32,7 @@ services:
       - "7878:7878"
 
   sonarr:
-    build:
-      context: ./sonarr
-      dockerfile: Dockerfile
-      args:
-        - VERSION=4.0.10.2544
-        - BRANCH=main
+    dockerfile: kvait/sonarr:latest
     volumes:
       - ./config/sonarr_config:/.config/Sonarr
       - ./storage/download/downloads:/downloads
@@ -56,13 +41,7 @@ services:
       - "8989:8989"
 
   jellyfin:
-    build:
-      context: ./jellyfin
-      dockerfile: Dockerfile
-      args:
-        - JELLY_VERSION=10.10.1
-        - JELLY_BRANCH=stable
-        - JFFMPEG_VERSION=7.0.2-6
+    dockerfile: kvait/jellyfin:latest
     volumes:
       - ./config/jellyfin_config/data:/opt/jellyfin/data
       - ./config/jellyfin_config/config:/opt/jellyfin/config
@@ -71,9 +50,7 @@ services:
       - "8096:8096"
 
   jellyseerr:
-    build:
-      context: ./jellyseerr
-      dockerfile: Dockerfile
+    dockerfile: kvait/jellyseer:latest
     volumes:
       - ./config/jellyseerr_config:/etc/jellyseerr/jellyseerr.conf
       - ./config/jellyseerr_config:/opt/jellyseerr/jellyseerr/config
