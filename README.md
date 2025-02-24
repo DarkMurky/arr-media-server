@@ -7,6 +7,7 @@ This repository contains a Docker Compose configuration for setting up a media s
 - Watch your media locally
 - 🌬️ Be free 🌬️
 
+## Setup
 Clone the project
 
 ```bash
@@ -34,3 +35,7 @@ Sonarr: http:///127.0.0.1:8989
 Radarr: http:///127.0.0.1:7878
 qBittorrent: http:///127.0.0.1:6881
 ```
+
+## Screenshots
+![image](https://github.com/user-attachments/assets/7407aeea-8908-4568-b573-0d1c486bc66f)
+
